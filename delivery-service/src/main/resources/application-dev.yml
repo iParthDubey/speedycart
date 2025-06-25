@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: delivery-service
+  config:
+    import: optional:file:./application-secret.yml
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/deliverydb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USER}
+    password: ${DB_PASS}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8082
