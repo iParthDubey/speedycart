@@ -1,19 +1,14 @@
+server:
+  port: 8081
+
 spring:
-  application:
-    name: delivery-service
-  config:
-    import: optional:file:./application-secret.yml
-
   datasource:
-    url: jdbc:mysql://localhost:3306/deliverydb
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USER}
-    password: ${DB_PASS}
-
+    url: jdbc:mysql://localhost:3306/delivery_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-server:
-  port: 8082
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
