@@ -20,8 +20,8 @@ public class OrderController {
 
     private final RestTemplate restTemplate;
 
-    private final String STORE_SERVICE_URL = "http://localhost:8082/api/store";
-    private final String DELIVERY_SERVICE_URL = "http://localhost:8081/api/agents";
+    private final String STORE_SERVICE_URL = "http://localhost:8081/api/store";
+    private final String DELIVERY_SERVICE_URL = "http://localhost:8082/api/agents";
 
     @Autowired
     public OrderController(RestTemplate restTemplate) {
@@ -58,8 +58,8 @@ public class OrderController {
         Long orderId = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
 
         // Step 3: Assign food packet to order
-        ResponseEntity<Map> foodPacketAssignResponse = restTemplate.postForEntity(
-                STORE_SERVICE_URL + "/assign?packetId=" + packetId + "&orderId=" + orderId, null, Map.class);
+        ResponseEntity<String> foodPacketAssignResponse = restTemplate.postForEntity(
+                STORE_SERVICE_URL + "/assign?packetId=" + packetId + "&orderId=" + orderId, null, String.class);
         if(!foodPacketReserveResponse.getStatusCode().is2xxSuccessful()){
             // Release the agent if food packet assignment fails
             restTemplate.postForEntity(DELIVERY_SERVICE_URL + "/release?agentId=" + agentId, null, Void.class);
