@@ -1,0 +1,93 @@
+// -------------------------------------------
+// ✅ Plugin Setup
+// -------------------------------------------
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+// -------------------------------------------
+// ✅ Project Metadata
+// -------------------------------------------
+group = 'com.speedycart'
+version = '0.0.1-SNAPSHOT'
+
+// -------------------------------------------
+// ✅ Java Toolchain (Java 17)
+// -------------------------------------------
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+// -------------------------------------------
+// ✅ Configuration for Annotation Processing (Lombok)
+// -------------------------------------------
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+// -------------------------------------------
+// ✅ Spring Cloud BOM Management
+// -------------------------------------------
+/*
+	📦 Spring Cloud dependencies like Eureka, Gateway, OpenFeign
+	    are not in Maven Central by default.
+
+	✅ Why this BOM is required:
+		- Ensures compatibility with Spring Boot version
+		- Centralized version control for Spring Cloud dependencies
+		- Example dependencies managed by this BOM:
+			1. spring-cloud-starter-netflix-eureka-client
+			2. spring-cloud-starter-gateway
+			3. spring-cloud-starter-openfeign
+*/
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.1"
+	}
+}
+
+// -------------------------------------------
+// ✅ Repositories (Use Maven Central)
+// -------------------------------------------
+repositories {
+	mavenCentral()
+}
+
+// -------------------------------------------
+// ✅ Project Dependencies
+// -------------------------------------------
+dependencies {
+	// Core Spring Boot Starters
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// 🔍 Eureka Client for service discovery
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+	// Lombok for cleaner Java code (requires annotationProcessor too)
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Dev tools for hot reload
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// MySQL JDBC driver
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Testing setup
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// -------------------------------------------
+// ✅ Use JUnit Platform for Testing
+// -------------------------------------------
+tasks.named('test') {
+	useJUnitPlatform()
+}

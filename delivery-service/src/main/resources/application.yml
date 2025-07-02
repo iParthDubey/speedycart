@@ -1,0 +1,14 @@
+# src/main/resources/application.yml
+spring:
+  profiles:
+    active: dev,secrets
+  application:
+    name: delivery-service
+
+
+
+#  The application.name is useful for:
+#
+#  1. Logging tags in distributed systems
+#  2. Spring Cloud Config / Eureka Service Discovery
+#  3. Tracing/Monitoring tools like Sleuth, Zipkin, Grafana, etc.
