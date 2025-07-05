@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface DeliveryAgentMapper {
 
     // Entity → DTO
-    DeliveryAgentReserveResponseDto toDto(Optional<DeliveryAgent> agent);
+    @Mapping(source = "id", target = "agentId")
+    @Mapping(target = "status", constant = "reserved")
+    DeliveryAgentReserveResponseDto toDto(DeliveryAgent agent);
 
     // DTO → Entity (used during save, assign etc.)
-    @Mapping(source = "agentId", target = "id")
-    @Mapping(source = "orderId", target = "orderId")
     DeliveryAgent toEntity(DeliveryAgentAssignRequestDto dto);
 }

@@ -64,10 +64,10 @@ repositories {
 // -------------------------------------------
 dependencies {
 	// Core Spring Boot Starters
-	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	// 🔍 Eureka Client for service discovery
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
@@ -75,8 +75,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	// Lombok for cleaner Java code (requires annotationProcessor too)
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 	// Dev tools for hot reload
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

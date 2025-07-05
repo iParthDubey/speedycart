@@ -1,21 +1,23 @@
 package com.speedycart.order_service.client;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import com.speedycart.common.dto.store.FoodPacketAssignRequestDto;
+import com.speedycart.common.dto.store.FoodPacketReleaseRequestDto;
+import com.speedycart.common.dto.store.FoodPacketReserveResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "store-service")
 public interface StoreClient {
 
     @PostMapping("/api/store/reserve")
-    ResponseEntity<String> reserveFood();
+    ResponseEntity<FoodPacketReserveResponseDto> reserveFood();
 
     @PostMapping("/api/store/assign")
-    ResponseEntity<String> assignPacket(@RequestParam("packetId") Long packetId, @RequestParam("orderId") Long orderId);
+    ResponseEntity<String> assignPacket(@RequestBody FoodPacketAssignRequestDto foodPacketAssignRequestDto);
 
     @PostMapping("/api/store/release")
-    ResponseEntity<String> releasePacket(@RequestParam("packetId") Long packetId);
+    ResponseEntity<String> releasePacket(@RequestBody FoodPacketReleaseRequestDto foodPacketReleaseRequestDto);
 
 }

@@ -19,7 +19,7 @@ public class DeliveryAgentService {
     @Autowired
     private DeliveryAgentMapper mapper;
 
-    public Optional<DeliveryAgentReserveResponseDto> reserveAgent(){
+    public DeliveryAgentReserveResponseDto reserveAgent(){
         Optional<DeliveryAgent> agent = repository.findFirstByReservedFalse();
         if (agent.isPresent()) {
             DeliveryAgent deliveryAgent = agent.get();
@@ -28,7 +28,7 @@ public class DeliveryAgentService {
             repository.save(deliveryAgent);
         }
 
-        return Optional.ofNullable(mapper.toDto(agent));
+        return mapper.toDto(agent.get());
     }
 
     public boolean assignAgent(DeliveryAgentAssignRequestDto requestDto) {

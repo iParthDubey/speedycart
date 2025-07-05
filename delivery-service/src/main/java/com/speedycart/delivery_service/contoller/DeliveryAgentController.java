@@ -7,6 +7,7 @@ import com.speedycart.delivery_service.entity.DeliveryAgent;
 import com.speedycart.delivery_service.service.DeliveryAgentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +23,8 @@ public class DeliveryAgentController {
 
     @PostMapping("/reserve")
     public ResponseEntity<?> reserveAgent() {
-        Optional<DeliveryAgentReserveResponseDto> agent = service.reserveAgent();
-        return agent.<ResponseEntity<Object>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(503).body(
-                        new ApiResponse("No available agents", false)
-                ));
+        DeliveryAgentReserveResponseDto agent = service.reserveAgent();
+        return new ResponseEntity<>(agent, HttpStatus.OK);
     }
 
     @PostMapping("/assign")
