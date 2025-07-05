@@ -21,10 +21,11 @@ public class FoodPacketController {
     @PostMapping("/reserve")
     public ResponseEntity<?> reservePacket() {
         return service.reservePacket()
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .<ResponseEntity<?>>map(packet -> ResponseEntity.ok(Map.of("packetId", packet.getId())))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                         .body(Map.of("error", "No food packets available")));
     }
+
 
     @PostMapping("/assign")
     public ResponseEntity<?> assignPacket(@RequestParam Long packetId, @RequestParam Long orderId) {

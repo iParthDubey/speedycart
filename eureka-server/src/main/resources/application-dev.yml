@@ -11,3 +11,14 @@ logging:
   level:
     com.netflix.eureka: OFF
     com.netflix.discovery: OFF
+
+
+# eureka.client.register-with-eureka: false
+#         The server does not register itself as a client in the Eureka registry
+#          (typical for standalone Eureka servers).
+#  eureka.client.fetch-registry: false
+#         The server does not fetch the registry from other Eureka servers (used when not running in a cluster).
+#  logging.level.com.netflix.eureka: OFF
+#         Disables logging for the com.netflix.eureka package.
+#  logging.level.com.netflix.discovery: OFF
+#         Disables logging for the com.netflix.discovery package.

@@ -39,7 +39,7 @@ public class OrderController {
                     .body("Failed to reserve food packet: " + foodPacketReserveResponse.getBody());
         }
 
-        Long packetId = Long.parseLong(foodPacketReserveResponse.getBody().get("id").toString());
+        Long packetId = Long.parseLong(foodPacketReserveResponse.getBody().get("packetId").toString());
 
         // Step 2: Reserve delivery agent
         ResponseEntity<Map> agentReserveResponse = restTemplate.postForEntity(
