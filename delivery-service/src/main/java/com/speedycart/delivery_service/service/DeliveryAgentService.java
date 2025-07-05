@@ -1,7 +1,7 @@
 package com.speedycart.delivery_service.service;
 
-import com.speedycart.delivery_service.dto.DeliveryAgentAssignRequestDto;
-import com.speedycart.delivery_service.dto.DeliveryAgentReserveResponseDto;
+import com.speedycart.common.dto.delivery.DeliveryAgentAssignRequestDto;
+import com.speedycart.common.dto.delivery.DeliveryAgentReserveResponseDto;
 import com.speedycart.delivery_service.entity.DeliveryAgent;
 import com.speedycart.delivery_service.mapper.DeliveryAgentMapper;
 import com.speedycart.delivery_service.repository.DeliveryAgentRepository;

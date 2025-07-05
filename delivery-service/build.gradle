@@ -56,6 +56,7 @@ dependencyManagement {
 // ✅ Repositories (Use Maven Central)
 // -------------------------------------------
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
@@ -70,7 +71,7 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	// 🔍 Eureka Client for service discovery
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
+	implementation 'com.speedycart:common-dto:0.0.1-SNAPSHOT'
 	//Other Spring dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 

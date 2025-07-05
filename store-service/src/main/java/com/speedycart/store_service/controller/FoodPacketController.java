@@ -1,8 +1,9 @@
 package com.speedycart.store_service.controller;
 
-import com.speedycart.store_service.dto.FoodPacketAssignRequestDto;
-import com.speedycart.store_service.dto.FoodPacketReleaseRequestDto;
-import com.speedycart.store_service.dto.FoodPacketReserveResponseDto;
+
+import com.speedycart.common.dto.store.FoodPacketAssignRequestDto;
+import com.speedycart.common.dto.store.FoodPacketReleaseRequestDto;
+import com.speedycart.common.dto.store.FoodPacketReserveResponseDto;
 import com.speedycart.store_service.service.FoodPacketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

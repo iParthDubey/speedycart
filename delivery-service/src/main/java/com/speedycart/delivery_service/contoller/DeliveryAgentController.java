@@ -1,18 +1,13 @@
 package com.speedycart.delivery_service.contoller;
 
-import com.speedycart.delivery_service.dto.ApiResponse;
-import com.speedycart.delivery_service.dto.DeliveryAgentAssignRequestDto;
-import com.speedycart.delivery_service.dto.DeliveryAgentReserveResponseDto;
-import com.speedycart.delivery_service.entity.DeliveryAgent;
+import com.speedycart.common.dto.delivery.DeliveryAgentAssignRequestDto;
+import com.speedycart.common.dto.delivery.DeliveryAgentReserveResponseDto;
 import com.speedycart.delivery_service.service.DeliveryAgentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/agents")

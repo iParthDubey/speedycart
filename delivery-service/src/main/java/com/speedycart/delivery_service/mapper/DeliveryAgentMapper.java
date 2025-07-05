@@ -1,7 +1,8 @@
 package com.speedycart.delivery_service.mapper;
 
-import com.speedycart.delivery_service.dto.DeliveryAgentAssignRequestDto;
-import com.speedycart.delivery_service.dto.DeliveryAgentReserveResponseDto;
+
+import com.speedycart.common.dto.delivery.DeliveryAgentAssignRequestDto;
+import com.speedycart.common.dto.delivery.DeliveryAgentReserveResponseDto;
 import com.speedycart.delivery_service.entity.DeliveryAgent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
