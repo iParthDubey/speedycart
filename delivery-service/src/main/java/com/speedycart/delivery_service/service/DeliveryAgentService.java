@@ -1,6 +1,9 @@
 package com.speedycart.delivery_service.service;
 
-import com.speedycart.delivery_service.model.DeliveryAgent;
+import com.speedycart.delivery_service.dto.DeliveryAgentAssignRequestDto;
+import com.speedycart.delivery_service.dto.DeliveryAgentReserveResponseDto;
+import com.speedycart.delivery_service.entity.DeliveryAgent;
+import com.speedycart.delivery_service.mapper.DeliveryAgentMapper;
 import com.speedycart.delivery_service.repository.DeliveryAgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +16,10 @@ public class DeliveryAgentService {
     @Autowired
     private DeliveryAgentRepository repository;
 
-    public Optional<DeliveryAgent> reserveAgent(){
+    @Autowired
+    private DeliveryAgentMapper mapper;
+
+    public Optional<DeliveryAgentReserveResponseDto> reserveAgent(){
         Optional<DeliveryAgent> agent = repository.findFirstByReservedFalse();
         if (agent.isPresent()) {
             DeliveryAgent deliveryAgent = agent.get();
@@ -21,14 +27,15 @@ public class DeliveryAgentService {
             deliveryAgent.setOrderId(null); // reservation phase, so no order ID is set
             repository.save(deliveryAgent);
         }
-        return  agent;
+
+        return Optional.ofNullable(mapper.toDto(agent));
     }
 
-    public boolean assignAgent(Long agentId, Long orderId) {
-        Optional<DeliveryAgent> optionalAgent = repository.findById(agentId);
+    public boolean assignAgent(DeliveryAgentAssignRequestDto requestDto) {
+        Optional<DeliveryAgent> optionalAgent = repository.findById(requestDto.getAgentId());
         if (optionalAgent.isPresent()) {
             DeliveryAgent deliveryAgent = optionalAgent.get();
-            deliveryAgent.setOrderId(orderId);
+            deliveryAgent.setOrderId(requestDto.getOrderId());
             repository.save(deliveryAgent);
             return true;
         }

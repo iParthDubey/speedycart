@@ -1,13 +1,14 @@
 package com.speedycart.store_service.controller;
 
+import com.speedycart.store_service.dto.FoodPacketAssignRequestDto;
+import com.speedycart.store_service.dto.FoodPacketReleaseRequestDto;
+import com.speedycart.store_service.dto.FoodPacketReserveResponseDto;
 import com.speedycart.store_service.service.FoodPacketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,28 +20,32 @@ public class FoodPacketController {
     private FoodPacketService service;
 
     @PostMapping("/reserve")
-    public ResponseEntity<?> reservePacket() {
+    public ResponseEntity<FoodPacketReserveResponseDto> reservePacket() {
         return service.reservePacket()
-                .<ResponseEntity<?>>map(packet -> ResponseEntity.ok(Map.of("packetId", packet.getId())))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                        .body(Map.of("error", "No food packets available")));
+                .map(foodPacket -> ResponseEntity.ok(
+                        new FoodPacketReserveResponseDto(foodPacket.getId(), "reserved")
+                )).orElseGet(
+                        ()-> ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                                .body(new FoodPacketReserveResponseDto(null, "unavailable"))
+                );
     }
 
 
     @PostMapping("/assign")
-    public ResponseEntity<?> assignPacket(@RequestParam Long packetId, @RequestParam Long orderId) {
-        boolean assigned = service.assignPacket(packetId, orderId);
+    public ResponseEntity<String> assignPacket(@RequestBody @Validated FoodPacketAssignRequestDto dto) {
+        boolean assigned = service.assignPacket(dto.getPacketId(), dto.getOrderId());
         return assigned
                 ? ResponseEntity.ok("Packet assigned")
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Assignment failed");
     }
 
     @PostMapping("/release")
-    public ResponseEntity<?> releasePacket(@RequestParam Long packetId) {
-        boolean released = service.releasePacket(packetId);
+    public ResponseEntity<String> releasePacket(@RequestBody @Validated FoodPacketReleaseRequestDto dto) {
+        boolean released = service.releasePacket(dto.getPacketId());
         return released
                 ? ResponseEntity.ok("Packet released")
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Release failed");
     }
+
 
 }

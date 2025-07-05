@@ -1,13 +1,14 @@
 package com.speedycart.delivery_service.contoller;
 
-import com.speedycart.delivery_service.model.DeliveryAgent;
+import com.speedycart.delivery_service.dto.ApiResponse;
+import com.speedycart.delivery_service.dto.DeliveryAgentAssignRequestDto;
+import com.speedycart.delivery_service.dto.DeliveryAgentReserveResponseDto;
+import com.speedycart.delivery_service.entity.DeliveryAgent;
 import com.speedycart.delivery_service.service.DeliveryAgentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.Optional;
@@ -20,17 +21,17 @@ public class DeliveryAgentController {
     private DeliveryAgentService service;
 
     @PostMapping("/reserve")
-    public ResponseEntity<Object> reserveAgent() {
-        Optional<DeliveryAgent> agent = service.reserveAgent();
+    public ResponseEntity<?> reserveAgent() {
+        Optional<DeliveryAgentReserveResponseDto> agent = service.reserveAgent();
         return agent.<ResponseEntity<Object>>map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(503).body(
-                        Map.of("error", "No available agents found")
+                        new ApiResponse("No available agents", false)
                 ));
     }
 
     @PostMapping("/assign")
-    public ResponseEntity<?> assignAgent(@RequestParam Long agentId, @RequestParam Long orderId) {
-        boolean assigned = service.assignAgent(agentId, orderId);
+    public ResponseEntity<?> assignAgent(@Valid @RequestBody DeliveryAgentAssignRequestDto dto) {
+        boolean assigned = service.assignAgent(dto);
         return assigned
                 ? ResponseEntity.ok("Agent assigned")
                 : ResponseEntity.status(400).body("Assignment failed");

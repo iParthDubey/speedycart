@@ -21,7 +21,7 @@ public class OrderService {
         // Phase 1: Prepare (Reserve)
         var foodPacketResponse = storeClient.reserveFood();
         if(!foodPacketResponse.getStatusCode().is2xxSuccessful()){
-            return "Order Falied : Food Unavailable";
+            return "Order Failed : Food Unavailable";
         }
 
         Long packetId = Long.valueOf(foodPacketResponse.getBody());

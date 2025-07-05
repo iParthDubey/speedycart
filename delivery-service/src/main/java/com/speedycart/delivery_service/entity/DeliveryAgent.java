@@ -1,4 +1,4 @@
-package com.speedycart.delivery_service.model;
+package com.speedycart.delivery_service.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
