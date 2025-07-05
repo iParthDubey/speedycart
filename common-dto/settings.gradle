@@ -1,0 +1,2 @@
+rootProject.name = 'common-dto'
+include 'common-dto', 'order-service', 'store-service', 'delivery-service'
