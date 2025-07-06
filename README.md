@@ -33,7 +33,7 @@ This is useful for scenarios where consistency across distributed systems is cri
 - Spring Boot 3.x
 - Spring Cloud (Eureka, Gateway, OpenFeign)
 - Spring Web, Spring Data JPA
-- H2 Database (In-Memory)
+- MySQL Database
 - MapStruct (Entity ↔ DTO mapping)
 - Lombok
 - Gradle
