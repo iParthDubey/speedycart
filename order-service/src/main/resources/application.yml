@@ -1,3 +1,5 @@
 spring:
+  profiles:
+    active: dev,secrets
   application:
     name: order-service
