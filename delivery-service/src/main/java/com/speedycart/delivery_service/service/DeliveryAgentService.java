@@ -5,6 +5,7 @@ import com.speedycart.common.dto.delivery.DeliveryAgentReserveResponseDto;
 import com.speedycart.delivery_service.entity.DeliveryAgent;
 import com.speedycart.delivery_service.mapper.DeliveryAgentMapper;
 import com.speedycart.delivery_service.repository.DeliveryAgentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class DeliveryAgentService {
     @Autowired
     private DeliveryAgentMapper mapper;
 
+    @Transactional
     public DeliveryAgentReserveResponseDto reserveAgent(){
         Optional<DeliveryAgent> agent = repository.findFirstByReservedFalse();
         if (agent.isPresent()) {
@@ -31,6 +33,7 @@ public class DeliveryAgentService {
         return mapper.toDto(agent.get());
     }
 
+    @Transactional
     public boolean assignAgent(DeliveryAgentAssignRequestDto requestDto) {
         Optional<DeliveryAgent> optionalAgent = repository.findById(requestDto.getAgentId());
         if (optionalAgent.isPresent()) {
@@ -42,6 +45,7 @@ public class DeliveryAgentService {
         return false;
     }
 
+    @Transactional
     public boolean releaseAgent(Long agentId) {
         Optional<DeliveryAgent> optionalAgent = repository.findById(agentId);
         if (optionalAgent.isPresent()) {

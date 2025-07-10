@@ -2,6 +2,7 @@ package com.speedycart.store_service.service;
 
 import com.speedycart.store_service.model.FoodPacket;
 import com.speedycart.store_service.repository.FoodPacketRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ public class FoodPacketService {
     @Autowired
     private FoodPacketRepository repository;
 
+    @Transactional
     public Optional<FoodPacket> reservePacket() {
         Optional<FoodPacket> packetOpt = repository.findFirstByReservedFalse();
         if (packetOpt.isPresent()) {
@@ -24,6 +26,7 @@ public class FoodPacketService {
         return packetOpt;
     }
 
+    @Transactional
     public boolean assignPacket(Long packetId, Long orderId) {
         return repository.findById(packetId).map(packet -> {
             if (packet.isReserved()) {
@@ -35,6 +38,7 @@ public class FoodPacketService {
         }).orElse(false);
     }
 
+    @Transactional
     public boolean releasePacket(Long packetId) {
         return repository.findById(packetId).map(packet -> {
             packet.setReserved(false);
