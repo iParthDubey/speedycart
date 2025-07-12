@@ -1,0 +1,54 @@
+server:
+  port: 8084
+
+spring:
+  config:
+    import: application-secret.yml
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+application:
+  security:
+    jwt:
+      secret-key: ${SECRET_KEY}
+      expiration: 3600000 # 1 hour
+      refresh-token:
+        expiration: 604800000 # 7 days
+
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+#Generate a Key Using OpenSSL (Command Line) :  openssl rand -hex 32
+
+# Logging Configuration
+logging:
+  level:
+    com.speedycart.auth_service: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
