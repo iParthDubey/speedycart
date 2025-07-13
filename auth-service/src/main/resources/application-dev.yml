@@ -4,8 +4,6 @@ server:
 spring:
   config:
     import: application-secret.yml
-  application:
-    name: auth-service
   datasource:
     url: jdbc:mysql://localhost:3306/auth_db
     username: ${DB_USERNAME}
@@ -16,8 +14,7 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-      hibernate:
-        format_sql: true
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
 
 application:
   security:
